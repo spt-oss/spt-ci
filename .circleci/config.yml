@@ -1,0 +1,105 @@
+version: 2
+
+settings: &settings
+    working_directory: ~/spt-ci
+
+jobs:
+    test-java:
+        <<: *settings
+        docker:
+            - image: circleci/openjdk:8-jdk
+        steps:
+            - checkout:
+                path: ~/spt-ci
+            - run: |
+                cat ./installer/install-maven.sh | \
+                    bash -s -- ~/.m2 3.3.9 | (( $(grep -c Download) >= 1 ))
+            - run: |
+                cat ./installer/install-maven.sh | \
+                    bash -s -- ~/.m2 3.3.9 | (( $(grep -c Download) == 0 ))
+            - run: |
+                cat ./installer/install-maven.sh | \
+                    bash -s -- ~/.m2 3.3.9 | grep 3.3.9
+            - run: |
+                cat ./installer/install-newrelic-jar.sh | \
+                    bash -s -- ~/.m2 ~ | (( $(grep -c Download) >= 1 ))
+            - run: |
+                cat ./installer/install-newrelic-jar.sh | \
+                    bash -s -- ~/.m2 ~ | (( $(grep -c Download) == 0 ))
+            - run: |
+                cat ./installer/install-newrelic-jar.sh | \
+                    bash -s -- ~/.m2 ~; [[ -e ~/newrelic.jar ]]
+            - run: |
+                cat ./installer/install-gpg-key.sh | \
+                    bash -s -- https://spt.page.link/parent-pubring-gpg-enc ${OPENSSL_PASSWORD} 2>&1 | grep succeeded
+            - run: |
+                cat ./installer/install-aws-cli.sh | \
+                    bash 2>&1 | grep aws-cli
+            - run: |
+                cat ./installer/install-command.sh | \
+                    bash -s -- aws,git,mvn | (( $(grep -c Install) == 14 ))
+            - run: |
+                source ./.circleci/test/command/ecr-upload-tests.sh
+            - run: |
+                source ./.circleci/test/command/ecs-deploy-tests.sh
+    test-nodejs:
+        <<: *settings
+        docker:
+            - image: circleci/node:latest
+        steps:
+            - checkout:
+                path: ~/spt-ci
+            - run: |
+                cat ./installer/install-brotli.sh | \
+                    bash -s -- ~/.m2 2>&1 | (( $(grep -c Cloning) >= 1 ))
+            - run: |
+                cat ./installer/install-brotli.sh | \
+                    bash -s -- ~/.m2 2>&1 | (( $(grep -c Cloning) == 0 ))
+            - run: |
+                cat ./installer/install-brotli.sh | \
+                    bash -s -- ~/.m2 2>&1 | grep bro
+            - run: |
+                sudo apt-get remove make gcc
+            - run: |
+                cat ./installer/install-zopfli.sh | \
+                    bash -s -- ~/.m2 2>&1 | (( $(grep -c Cloning) >= 1 ))
+            - run: |
+                cat ./installer/install-zopfli.sh | \
+                    bash -s -- ~/.m2 2>&1 | (( $(grep -c Cloning) == 0 ))
+            - run: |
+                cat ./installer/install-zopfli.sh | \
+                    bash -s -- ~/.m2 2>&1 | grep zopfli
+            - run: |
+                cat ./installer/install-aws-cli.sh | \
+                    bash 2>&1 | grep aws-cli
+            - run: |
+                cat ./installer/install-command.sh | \
+                    bash -s -- aws | (( $(grep -c Install) == 2 ))
+            - run: |
+                source ./.circleci/test/command/ecr-upload-tests.sh
+            - run: |
+                source ./.circleci/test/command/ecs-deploy-tests.sh
+    test-infra:
+        <<: *settings
+        docker:
+            - image: circleci/golang:latest
+        steps:
+            - checkout:
+                path: ~/spt-ci
+            - run: |
+                cat ./installer/install-terraform.sh | \
+                    bash -s -- ~/.go_workspace 0.11.8 | (( $(grep -c Download) >= 1 ))
+            - run: |
+                cat ./installer/install-terraform.sh | \
+                    bash -s -- ~/.go_workspace 0.11.8 | (( $(grep -c Download) == 0 ))
+            - run: |
+                cat ./installer/install-terraform.sh | \
+                    bash -s -- ~/.go_workspace 0.11.8 | grep 0.11.8
+
+workflows:
+    version: 2
+    release:
+        jobs:
+            - test-java
+            - test-nodejs
+            - test-infra
