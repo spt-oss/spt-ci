@@ -3,11 +3,12 @@
 set -eu
 set -o pipefail
 
-docker_image=
-aws_region=
-arguments=()
+deploy_args=()
 
 function self::prepare() {
+	
+	local docker_image=
+	local aws_region=
 	
 	while [[ ${#} -gt 0 ]]
 	do
@@ -24,7 +25,7 @@ function self::prepare() {
 				;;
 			
 			*)
-				arguments+=(${1})
+				deploy_args+=(${1})
 				;;
 		esac
 		
@@ -50,10 +51,10 @@ function self::prepare() {
 		exit 1
 	fi
 	
-	arguments+=(-i)
-	arguments+=(${docker_image})
-	arguments+=(-r)
-	arguments+=(${aws_region})
+	deploy_args+=(-i)
+	deploy_args+=(${docker_image})
+	deploy_args+=(-r)
+	deploy_args+=(${aws_region})
 }
 
 function self::execute() {
@@ -67,7 +68,7 @@ function self::execute() {
 	
 	chmod +x ${delegate}
 	
-	${delegate} ${arguments[@]}
+	${delegate} ${deploy_args[@]}
 }
 
 {
