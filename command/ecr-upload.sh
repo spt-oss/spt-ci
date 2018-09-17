@@ -48,9 +48,9 @@ function self::prepare() {
 
 function self::execute() {
 	
-	$(aws ecr get-login ${login_args[@]-})
+	$(aws ecr get-login ${login_args[@]})
 	
-	docker build ${build_args[@]-}
+	docker build ${build_args[@]}
 	docker push ${docker_tag}
 }
 
