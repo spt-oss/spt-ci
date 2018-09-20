@@ -2,7 +2,7 @@
 
 [![circleci](https://img.shields.io/badge/circleci-spt--ci-brightgreen.svg)](https://circleci.com/gh/spt-oss/spt-ci)
 
-* CI support scripts for AWS, Docker, Java, etc.
+* CI support scripts for AWS, Java, Node.js, etc.
 * These scripts have been tested in [CircleCI 2.0 Pre-Built Docker Images](https://circleci.com/docs/2.0/circleci-images/).
 
 ## TOC
