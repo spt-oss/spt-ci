@@ -139,20 +139,9 @@
 
 * Any CI
 	```bash
-	$ curl -fsSL https://spt.page.link/ci-install-newrelic-jar-sh | bash -s -- ~/.cache ~/foo  # <cache-dir> <install-dir>
+	$ curl -fsSL https://spt.page.link/ci-install-newrelic-jar-sh | bash -s -- ~/foo  # <install-dir>
 	$ ls ~/foo
 	newrelic.jar
-	```
-* CircleCI
-	```yaml
-	- restore_cache:
-	    keys:
-	        - XXXXXXXXXX
-	- run: curl -fsSL https://spt.page.link/ci-install-newrelic-jar-sh | bash -s -- ~/.cache ~/foo  # <cache-dir> <install-dir>
-	- save_cache:
-	    paths:
-	        - ~/.cache
-	    key: XXXXXXXXXX
 	```
 
 ### Install GPG key
