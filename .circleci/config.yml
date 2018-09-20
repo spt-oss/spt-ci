@@ -22,13 +22,7 @@ jobs:
                     bash -s -- ~/.m2 3.3.9 | grep 3.3.9
             - run: |
                 cat ./installer/install-newrelic-jar.sh | \
-                    bash -s -- ~/.m2 ~ | (( $(grep -c Download) >= 1 ))
-            - run: |
-                cat ./installer/install-newrelic-jar.sh | \
-                    bash -s -- ~/.m2 ~ | (( $(grep -c Download) == 0 ))
-            - run: |
-                cat ./installer/install-newrelic-jar.sh | \
-                    bash -s -- ~/.m2 ~; [[ -e ~/newrelic.jar ]]
+                    bash -s -- ~; [[ -e ~/newrelic.jar ]]
             - run: |
                 cat ./installer/install-gpg-key.sh | \
                     bash -s -- https://spt.page.link/parent-pubring-gpg-enc ${OPENSSL_PASSWORD} 2>&1 | grep succeeded
