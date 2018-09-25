@@ -6,7 +6,7 @@ set -o pipefail
 function self::prepare() {
 	
 	# Check commands
-	gpg --version
+	gpg --version | grep gpg
 	openssl version
 	
 	# Remove previous keys if found
