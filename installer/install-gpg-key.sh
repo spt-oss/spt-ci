@@ -5,6 +5,10 @@ set -o pipefail
 
 function self::prepare() {
 	
+	# Check commands
+	gpg --version
+	openssl version
+	
 	# Remove previous keys if found
 	rm -f ${HOME}/.gnupg/*.gpg*
 	
