@@ -10,6 +10,7 @@ function self::install() {
 	
 	if [[ $(dpkg -l | grep -c python-dev) == 0 ]]; then
 		
+		sudo apt-get -qq update
 		sudo apt-get -qq install python-dev
 	fi
 	
