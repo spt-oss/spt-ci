@@ -13,7 +13,7 @@ function self::execute() {
 	mvn install --batch-mode -DskipTests -Dcheckstyle.skip=true ${@}
 	
 	# Install plugins after install
-	mvn javadoc:help spring-boot:help --batch-mode
+	mvn javadoc:help --batch-mode
 }
 
 {
