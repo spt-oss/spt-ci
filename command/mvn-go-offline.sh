@@ -10,7 +10,7 @@ function self::execute() {
 	#mvn dependency:go-offline
 	
 	# Install plugins, dependencies and artifacts
-	mvn install --batch-mode -DskipTests -Dcheckstyle.skip=true
+	mvn install --batch-mode -DskipTests -Dcheckstyle.skip=true ${@}
 	
 	# Install plugins after install
 	mvn javadoc:help spring-boot:help --batch-mode
