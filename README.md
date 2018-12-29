@@ -41,7 +41,7 @@
 	| Name          | Reference                                                                                      |
 	| ---           | ---                                                                                            |
 	| ecr-upload.sh | [Amazon ECR](http://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html) |
-	| ecs-deploy.sh | [spt-oss/ecs-deploy](https://github.com/spt-oss/ecs-deploy)                                    |
+	| ecs-deploy.sh | [ecs-deploy](https://github.com/silinternational/ecs-deploy)                                   |
 	| git-*.sh      | [Git](https://git-scm.com/)                                                                    |
 	| mvn-*.sh      | [Maven](https://maven.apache.org/)                                                             |
 
@@ -192,7 +192,7 @@
 ### Refine Maven build in CircleCI
 
 * See the examples below.
-	* [spt-oss/spt-parent](https://github.com/spt-oss/spt-parent)
+	* [spt-oss/spt-oss-parent](https://github.com/spt-oss/spt-oss-parent)
 
 ## License
 
