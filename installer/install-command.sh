@@ -20,6 +20,7 @@ MVN_COMMANDS=( \
 	mvn-deploy \
 	mvn-go-offline \
 	mvn-license-format \
+	mvn-package \
 	mvn-release-perform \
 	mvn-release-prepare \
 	mvn-release \
