@@ -31,7 +31,7 @@ jobs:
                     bash 2>&1 | grep aws-cli
             - run: |
                 cat ./installer/install-command.sh | \
-                    bash -s -- aws,git,mvn | (( $(grep -c Install) == 14 ))
+                    bash -s -- aws,git,mvn | (( $(grep -c Install) == 15 ))
             - run: |
                 source ./.circleci/test/command/ecr-upload-tests.sh
             - run: |
